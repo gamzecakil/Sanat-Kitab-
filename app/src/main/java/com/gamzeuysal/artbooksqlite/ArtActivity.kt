@@ -204,11 +204,37 @@ class ArtActivity : AppCompatActivity() {
 
 
     }
+    //Bitmap i küçültmek
+    private fun makeSmallerBitmap(image : Bitmap,maximumSize:Int):Bitmap
+    {
+        var width = image.width
+        var height = image.height
 
+        val bitmapRatio : Double = width.toDouble() / height.toDouble()
+        if(bitmapRatio > 1)
+        {
+            //landscape
+            width = maximumSize
+            val scaledHight = width / bitmapRatio
+            height = scaledHight.toInt()
+        }else{
+            //portrait
+            height = maximumSize
+            val scaledWidth = height * bitmapRatio
+            width = scaledWidth.toInt()
+        }
+        return Bitmap.createScaledBitmap(image,width,height,true)
+    }
 
     fun save (view : View)
     {
-
+        val artName = binding.artNameText.text.toString()
+        val artisName = binding.artistNameText.text.toString()
+        val year = binding.yearText.text.toString()
+     if(selectedBitmap != null)
+     {
+         val smallBitmap = makeSmallerBitmap(selectedBitmap!!,300)
+     }
     }
 
 }
